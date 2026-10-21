@@ -1,0 +1,46 @@
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+out/
+
+# ===== Archivos generados y compilados =====
+target/
+build/
+dist/
+*.class
+*.log
+
+# ===== App empaquetada (jpackage / portable) =====
+runtime/
+salida/
+/META-INF/
+
+# ===== Librerías y binarios locales =====
+javafx-mods/
+native/
+
+# ===== Configuración local y secretos =====
+.env
+.env.*
+!.env.example
+secrets.properties
+application-local.properties
+
+# ===== Datos locales de la aplicación =====
+*.db
+*.sqlite
+*.sqlite3
+*.pdf
+
+# ===== Temporales y copias =====
+src.zip
+~*
+*.DDF
+*.tmp
+*.bak
+
+# ===== Sistema operativo =====
+Thumbs.db
+Desktop.ini
+.DS_Store
