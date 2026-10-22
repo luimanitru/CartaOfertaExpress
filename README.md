@@ -2,7 +2,7 @@
 
 Aplicación de escritorio para Windows que genera cartas de oferta en PDF a partir de los datos de los candidatos de un proceso de selección.
 
-**Versión 1.8**
+**Versión 2.0**
 
 <!-- 
 ![Pantalla principal](docs/img/captura1.png)

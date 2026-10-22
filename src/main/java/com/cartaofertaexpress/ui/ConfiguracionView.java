@@ -825,7 +825,7 @@ public class ConfiguracionView {
 
         Label version =
                 new Label(
-                        "Versión 1.8"
+                        "Versión 2.0"
                 );
 
         version.setStyle("""
