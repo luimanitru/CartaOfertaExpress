@@ -123,9 +123,11 @@ docs/
 ```
 
 ## Capturas
-
+<!-- 
 [COMPLETAR: capturas de la pantalla principal, el formulario y el envío de correos, con datos inventados]
+-->
+
 
 ## Autor
 
-[COMPLETAR: tu nombre y enlace a tu perfil]
+<!-- [COMPLETAR: nombre y enlace a perfil]-->
