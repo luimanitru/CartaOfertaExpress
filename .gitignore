@@ -44,3 +44,12 @@ src.zip
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Datos reales generados por la app
+datos/
+plantillas/
+plantilla_html/
+cartas_generadas/
+*.pptx
+codigo_completo.txt
+generar-portable.bat
