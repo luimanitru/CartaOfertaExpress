@@ -121,26 +121,21 @@ public class ValidadorCandidato {
     }
 
 
+
     // =====================================================
     // CELULAR
     // =====================================================
 
-    public static String validarCelular(
-            String celular
-    ) {
+    public static String validarCelular(String celular) {
 
+        // El celular es opcional.
         if (celular == null || celular.isBlank()) {
-
-            throw new IllegalArgumentException(
-                    "El celular es obligatorio."
-            );
+            return "";
         }
 
-        celular =
-                celular.trim();
+        celular = celular.trim();
 
         if (!SOLO_NUMEROS.matcher(celular).matches()) {
-
             throw new IllegalArgumentException(
                     "El celular solo puede contener números."
             );
@@ -154,23 +149,16 @@ public class ValidadorCandidato {
     // CORREO
     // =====================================================
 
-    public static String validarCorreo(
-            String correo
-    ) {
+    public static String validarCorreo(String correo) {
 
+        // El correo es opcional.
         if (correo == null || correo.isBlank()) {
-
-            throw new IllegalArgumentException(
-                    "El correo es obligatorio."
-            );
+            return "";
         }
 
-        correo =
-                correo.trim()
-                        .toLowerCase();
+        correo = correo.trim().toLowerCase();
 
         if (!CORREO.matcher(correo).matches()) {
-
             throw new IllegalArgumentException(
                     "El correo no tiene un formato válido."
             );
@@ -178,6 +166,7 @@ public class ValidadorCandidato {
 
         return correo;
     }
+
 
 
     // =====================================================

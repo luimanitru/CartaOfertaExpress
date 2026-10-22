@@ -247,22 +247,6 @@ public class MainView {
 
         subtitulo.setTranslateY(-8);
 
-        // ==================================================
-        // FRASE
-        // ==================================================
-
-        Label frase =
-                new Label(
-                        "Del ternerito Luis con cariño para el amor de su vida: su novillita Vanessa"
-                );
-
-        frase.setStyle("""
-                -fx-font-size: 12px;
-                -fx-font-style: italic;
-                -fx-font-family: "Georgia";
-                -fx-text-fill: #F0CEA4;
-                -fx-opacity: 0.85;
-                """);
 
         // ==================================================
         // ENCABEZADO
@@ -272,8 +256,7 @@ public class MainView {
                 new VBox(
                         6,
                         tituloConLogo,
-                        subtitulo,
-                        frase
+                        subtitulo
                 );
 
         encabezado.setAlignment(
@@ -282,7 +265,7 @@ public class MainView {
 
         encabezado.setPadding(
                 new Insets(
-                        5,
+                        15,
                         20,
                         10,
                         20
@@ -541,7 +524,7 @@ public class MainView {
                         botonCambiarPlantilla,
                         botonResaltar,
                         botonExportarExcel,
-                        botonCorreos,
+                        // botonCorreos,
                         botonConfiguracion
                 );
 
@@ -1187,16 +1170,20 @@ public class MainView {
                 TextFieldTableCell.forTableColumn()
         );
 
+
         cargo.setOnEditCommit(
                 event -> {
 
                     Candidato candidato =
                             event.getRowValue();
 
+                    String nuevoCargo =
+                            event.getNewValue() == null
+                                    ? ""
+                                    : event.getNewValue().trim();
+
                     candidato.setCargo(
-                            ValidadorCandidato.normalizarTexto(
-                                    event.getNewValue()
-                            )
+                            nuevoCargo
                     );
 
                     actualizarCandidato(
@@ -1204,6 +1191,7 @@ public class MainView {
                     );
                 }
         );
+
 
         // ==================================================
         // SALARIO
@@ -1503,16 +1491,20 @@ public class MainView {
                 TextFieldTableCell.forTableColumn()
         );
 
+
         ciudad.setOnEditCommit(
                 event -> {
 
                     Candidato candidato =
                             event.getRowValue();
 
+                    String nuevaCiudad =
+                            event.getNewValue() == null
+                                    ? ""
+                                    : event.getNewValue().trim();
+
                     candidato.setCiudad(
-                            ValidadorCandidato.normalizarTexto(
-                                    event.getNewValue()
-                            )
+                            nuevaCiudad
                     );
 
                     actualizarCandidato(
@@ -1520,6 +1512,7 @@ public class MainView {
                     );
                 }
         );
+
 
         // ==================================================
         // CELULAR

@@ -311,14 +311,14 @@ public class CandidatoFormView {
         agregarCampo(
                 formulario,
                 8,
-                "Celular:",
+                "Celular (opcional):",
                 campoCelular
         );
 
         agregarCampo(
                 formulario,
                 9,
-                "Correo:",
+                "Correo (opcional):",
                 campoCorreo
         );
 
