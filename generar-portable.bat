@@ -1,3 +1,4 @@
+```bat
 @echo off
 setlocal
 
@@ -8,7 +9,7 @@ echo ============================================
 REM Verificar que exista el jar compilado
 if not exist target\carta-oferta-express-2.0.jar (
     echo.
-    echo ERROR: No se encontro target\carta-oferta-express-1.8.jar
+    echo ERROR: No se encontro target\carta-oferta-express-2.0.jar
     echo Compila el proyecto primero desde IntelliJ.
     pause
     exit /b 1
@@ -43,7 +44,7 @@ echo.
 echo [3/3] Generando ejecutable con jpackage...
 if exist salida rmdir /s /q salida
 
-jpackage --type app-image --name CartaOfertaExpress --input dist --main-jar carta-oferta-express-2.0.jar --main-class com.cartaofertaexpress.Main --icon icono.ico --app-version 2.0 --dest salida --java-options "-Djava.library.path=$APPDIR/native" --java-options "--module-path=$APPDIR/mods" --java-options "--add-modules=javafx.controls,javafx.web" --java-options "--class-path=$APPDIR/carta-oferta-express-1.8.jar;$APPDIR/lib/*"
+jpackage --type app-image --name CartaOfertaExpress --input dist --main-jar carta-oferta-express-2.0.jar --main-class com.cartaofertaexpress.Main --icon icono.ico --app-version 2.0 --dest salida --java-options "-Djava.library.path=$APPDIR/native" --java-options "--module-path=$APPDIR/mods" --java-options "--add-modules=javafx.controls,javafx.web" --java-options "--class-path=$APPDIR/carta-oferta-express-2.0.jar;$APPDIR/lib/*"
 
 if errorlevel 1 (
     echo.
@@ -58,3 +59,4 @@ echo   LISTO! Tu portable esta en:
 echo   salida\CartaOfertaExpress\CartaOfertaExpress.exe
 echo ============================================
 pause
+```
