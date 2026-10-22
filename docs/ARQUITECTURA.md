@@ -159,10 +159,14 @@ Genera el PowerPoint de cada carta usando Apache POI.
 `exportar(...)`: genera un archivo Excel con los candidatos.
 
 ### `EmailService`
+> **Estado:** implementado y probado con una cuenta personal de Microsoft, pero no configurado con una cuenta corporativa; no se usa en el entorno de trabajo.
+
 - `enviarCorreo(usuario, destinatario, asunto, html, adjunto)`: obtiene un token con `MicrosoftAuthService` y envía el correo por SMTP (`smtp-mail.outlook.com`, puerto 587, STARTTLS, mecanismo XOAUTH2). El cuerpo es HTML y el adjunto es el PDF.
 - `obtenerArchivoPdf(rutaGuardada)`: dada la ruta registrada del candidato, devuelve el `.pdf` (si la base de datos guardó el `.pptx`, busca el PDF equivalente).
 
 ### `MicrosoftAuthService`
+> **Estado:** implementado y probado con una cuenta personal de Microsoft, pero no configurado con una cuenta corporativa; no se usa en el entorno de trabajo.
+
 `obtenerAccessToken()`: abre el inicio de sesión interactivo de Microsoft con MSAL4J (aplicación pública, autoridad `consumers`, permiso `https://outlook.office.com/SMTP.Send`) y devuelve el token de acceso. No usa `clientSecret`.
 
 ### `EmailTemplateService`
@@ -201,6 +205,8 @@ Formulario de "Nuevo candidato" / "Editar candidato". Campos: nombre, cédula, t
 Ventana para agregar, eliminar y seleccionar la plantilla de PowerPoint activa. Usa `PlantillaService`. `getPlantillaSeleccionada()` devuelve la elegida.
 
 ### `CorreosView`
+> **Estado:** implementado y probado con una cuenta personal de Microsoft, pero no configurado con una cuenta corporativa; no se usa en el entorno de trabajo.
+
 Ventana de envío de correos.
 
 - `validarParaEnvio(...)`: un candidato es apto si ya tiene carta generada y un correo.
@@ -218,7 +224,7 @@ Ventana de configuración con tres secciones: **Apariencia** (tamaño de fuentes
 
 Cosas que encontré en el código y conviene saber antes de modificar:
 
-1. **Correo remitente fijo.** `CorreosView.obtenerUsuarioCorreo()` devuelve una dirección escrita directamente en el código, en lugar de leerla de la configuración. Si cambia la cuenta que envía, hay que cambiarla ahí.
+1. **Correo remitente fijo** (relevante solo si se activa el envío de correos). `CorreosView.obtenerUsuarioCorreo()` devuelve una dirección escrita directamente en el código, en lugar de leerla de la configuración. Si cambia la cuenta que envía, hay que cambiarla ahí.
 2. **Servidor SMTP fijo.** `EmailService` define servidor y puerto como constantes; los métodos de `ConfiguracionService` para servidor, puerto y remitente no se usan.
 3. **Rutas relativas.** `datos/`, `plantillas/`, `plantilla_html/` y `cartas_generadas/` dependen de la carpeta desde donde se ejecute la aplicación. Si se lanza desde otro lugar, creará esas carpetas allí y "perderá" los datos anteriores.
 4. **Archivos grandes de UI.** `MainView` supera las 4.000 líneas; es el archivo más difícil de modificar con seguridad.

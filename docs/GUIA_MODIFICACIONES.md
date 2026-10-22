@@ -73,6 +73,8 @@ Ejemplo: "Jefe inmediato". Hay que tocar **varias** clases; si olvidas alguna, e
 
 ## 6. Cambiar la cuenta o el servidor de correo
 
+> **Estado:** implementado y probado con una cuenta personal de Microsoft, pero no configurado con una cuenta corporativa; no se usa en el entorno de trabajo.
+
 ⚠️ **Riesgo alto.** Hoy está repartido y fijo en el código:
 
 | Qué | Dónde |
@@ -122,7 +124,7 @@ Si cambias una ruta, cámbiala en todos los lugares de la tabla. Las rutas de ca
 
 Pasos:
 
-1. `mvn clean package` (genera `target/carta-oferta-express-1.0-SNAPSHOT.jar` y `target/lib/`).
+1. `mvn clean package` (genera `target/carta-oferta-express-1.8.jar` y `target/lib/`).
 2. Verifica que exista `native/jacob-1.18-x64.dll`.
 3. Ejecuta `generar-portable.bat`.
 4. Resultado: `salida\CartaOfertaExpress\CartaOfertaExpress.exe`.
@@ -130,13 +132,26 @@ Pasos:
 Qué hace el script: borra y recrea `dist/`, copia el jar y las librerías (separando los `javafx-*-win.jar` en `dist/mods/`), copia la DLL y llama a `jpackage` con el icono `icono.ico`.
 
 ⚠️ Puntos delicados:
-- **Si cambias la versión de la aplicación** (`<version>` en el `pom.xml`) o de una dependencia, el nombre del jar cambia y el `.bat` falla, porque tiene `carta-oferta-express-1.0-SNAPSHOT.jar` escrito dos veces y `jacob-1.18-x64.dll`. Actualiza esos nombres.
+- **Si cambias la versión de la aplicación** (`<version>` en el `pom.xml`) o de una dependencia, el nombre del jar cambia y el `.bat` falla, porque tiene `carta-oferta-express-1.8.jar` escrito varias veces y `jacob-1.18-x64.dll`. Actualiza esos nombres.
 - Si agregas una dependencia de JavaFX nueva (por ejemplo `javafx-fxml`), hay que agregarla también en `--add-modules` dentro del `jpackage`.
 - Si agregas una librería con DLL propia, hay que copiarla al portable.
 - `jpackage` requiere JDK 21 en el `PATH`.
 - No subas `dist/` ni `salida/` a GitHub (ya están en el `.gitignore`).
 
-## 12. Actualizar la versión de la base de datos sin perder datos
+## 12. Cambiar la versión de la aplicación (por ejemplo de 1.8 a 2.0)
+
+La versión está en **cuatro lugares** y deben coincidir:
+
+| # | Archivo | Qué cambiar |
+|---|---|---|
+| 1 | `ConfiguracionView.mostrarAcercaDe` | El texto "Versión 1.8" que ve el usuario (busca `1.8` con `Ctrl + Shift + F`) |
+| 2 | `pom.xml` | `<version>` del proyecto (la que está debajo de `<artifactId>carta-oferta-express</artifactId>`, **no** las de las dependencias) |
+| 3 | `generar-portable.bat` | El nombre del jar (`carta-oferta-express-1.8.jar`), que aparece varias veces. Opcional: `--app-version` en el comando `jpackage` |
+| 4 | `README.md` y `docs/` | El nombre del jar y la línea "Versión" |
+
+Después: recarga Maven en IntelliJ, ejecuta `mvn clean package`, comprueba que se generó `target/carta-oferta-express-<versión>.jar` y prueba `generar-portable.bat`. Para marcar la versión en GitHub: `git tag v2.0` y `git push --tags`.
+
+## 13. Actualizar la versión de la base de datos sin perder datos
 
 - Nunca borres `datos/carta_oferta.db` para "arreglar" un cambio de estructura: perderías los candidatos.
 - Usa siempre `agregarColumnaSiNoExiste`. SQLite no permite quitar ni cambiar columnas fácilmente con `ALTER TABLE`; si necesitas eso, haz una copia de seguridad del `.db` antes.

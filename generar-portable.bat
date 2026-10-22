@@ -6,9 +6,9 @@ echo   Generando portable de CartaOfertaExpress
 echo ============================================
 
 REM Verificar que exista el jar compilado
-if not exist target\carta-oferta-express-1.0-SNAPSHOT.jar (
+if not exist target\carta-oferta-express-1.8.jar (
     echo.
-    echo ERROR: No se encontro target\carta-oferta-express-1.0-SNAPSHOT.jar
+    echo ERROR: No se encontro target\carta-oferta-express-1.8.jar
     echo Compila el proyecto primero desde IntelliJ.
     pause
     exit /b 1
@@ -26,7 +26,7 @@ mkdir dist\native
 REM 2. Copiar archivos
 echo.
 echo [2/3] Copiando archivos...
-copy target\carta-oferta-express-1.0-SNAPSHOT.jar dist\ >nul
+copy target\carta-oferta-express-1.8.jar dist\ >nul
 
 for %%f in (target\lib\*.jar) do (
     echo %%~nxf | findstr /i "javafx" >nul
@@ -43,7 +43,7 @@ echo.
 echo [3/3] Generando ejecutable con jpackage...
 if exist salida rmdir /s /q salida
 
-jpackage --type app-image --name CartaOfertaExpress --input dist --main-jar carta-oferta-express-1.0-SNAPSHOT.jar --main-class com.cartaofertaexpress.Main --icon icono.ico --dest salida --java-options "-Djava.library.path=$APPDIR/native" --java-options "--module-path=$APPDIR/mods" --java-options "--add-modules=javafx.controls,javafx.web" --java-options "--class-path=$APPDIR/carta-oferta-express-1.0-SNAPSHOT.jar;$APPDIR/lib/*"
+jpackage --type app-image --name CartaOfertaExpress --input dist --main-jar carta-oferta-express-1.8.jar --main-class com.cartaofertaexpress.Main --icon icono.ico --app-version 1.8 --dest salida --java-options "-Djava.library.path=$APPDIR/native" --java-options "--module-path=$APPDIR/mods" --java-options "--add-modules=javafx.controls,javafx.web" --java-options "--class-path=$APPDIR/carta-oferta-express-1.8.jar;$APPDIR/lib/*"
 
 if errorlevel 1 (
     echo.

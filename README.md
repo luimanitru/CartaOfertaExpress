@@ -1,6 +1,8 @@
 # CartaOferta Express
 
-Aplicación de escritorio para Windows que genera cartas de oferta en PDF a partir de los datos de los candidatos de un proceso de selección, y las envía por correo.
+Aplicación de escritorio para Windows que genera cartas de oferta en PDF a partir de los datos de los candidatos de un proceso de selección.
+
+**Versión 1.8**
 
 <!-- 
 ![Pantalla principal](docs/img/captura1.png)
@@ -8,7 +10,7 @@ Aplicación de escritorio para Windows que genera cartas de oferta en PDF a part
 
 ## El problema que resuelve
 
-Preparar cartas de oferta una por una es un trabajo manual, repetitivo y propenso a errores de digitación. CartaOferta Express automatiza el ciclo completo: registra o importa candidatos, llena una plantilla de PowerPoint con sus datos, exporta cada carta a PDF y la envía por correo. Es una aplicación real, usada en un proceso de selección.
+Preparar cartas de oferta una por una es un trabajo manual, repetitivo y propenso a errores de digitación. CartaOferta Express automatiza el ciclo completo: registra o importa candidatos, llena una plantilla de PowerPoint con sus datos, y exporta cada carta a PDF. Es una aplicación real, usada en un proceso de selección.
 
 ## Funcionalidades
 
@@ -17,8 +19,7 @@ Preparar cartas de oferta una por una es un trabajo manual, repetitivo y propens
 - **Generación masiva de cartas:** selecciona varios candidatos y genera sus cartas en una sola operación, con barra de progreso y opción de cancelar.
 - **Plantillas de PowerPoint:** se administran desde la propia aplicación; las variables `{{NOMBRE}}`, `{{CARGO}}`, `{{SALARIO}}`, etc. se reemplazan automáticamente.
 - **Exportación a PDF:** cada carta se convierte a PDF usando PowerPoint.
-- **Envío de correos:** correo HTML personalizable con la carta en PDF adjunta, con vista previa y validación de candidatos aptos para el envío.
-- **Inicio de sesión con Microsoft (OAuth 2.0):** el envío usa un token de acceso, sin guardar contraseñas.
+- **Envío de correos con autenticación Microsoft (OAuth 2.0), implementado pero no en uso:** correo HTML con vista previa y la carta en PDF adjunta, con MSAL4J y Jakarta Mail. Se probado con una cuenta personal de Microsoft y un registro propio en Azure, pero no se llegó a configurar con una cuenta corporativa, por lo que no está en uso en el entorno de trabajo. Ver [Estado del envío de correos](#estado-del-envío-de-correos).
 - **Configuración:** tamaño de fuentes, filas alternadas y tipos de contrato editables.
 - **Almacenamiento local** en SQLite, con migración automática de la estructura al actualizar la aplicación.
 
@@ -32,8 +33,8 @@ Preparar cartas de oferta una por una es un trabajo manual, repetitivo y propens
 | Base de datos | SQLite (`sqlite-jdbc` 3.50.3.0) |
 | Excel y PowerPoint | Apache POI 5.4.1 |
 | PowerPoint a PDF | Jacob 1.18 (puente COM hacia PowerPoint) |
-| Correo | Jakarta Mail 2.0.1 (SMTP con XOAUTH2) |
-| Autenticación | MSAL4J 1.17.3 (Microsoft) |
+| Correo (no en uso) | Jakarta Mail 2.0.1 (SMTP con XOAUTH2) |
+| Autenticación (no en uso) | MSAL4J 1.17.3 (Microsoft) |
 | Empaquetado | `jpackage` (ejecutable portable) |
 
 ## Arquitectura
@@ -60,7 +61,6 @@ Documentación detallada:
 - **Microsoft PowerPoint instalado:** la conversión a PDF se hace controlando PowerPoint mediante COM.
 - JDK 21 (incluye `jpackage`, necesario solo para generar el portable).
 - Maven.
-- Una cuenta de Microsoft personal para enviar correos (la aplicación usa la autoridad `consumers` de Microsoft).
 
 ## Compilar y ejecutar
 
@@ -73,7 +73,7 @@ El repositorio no incluye binarios. Antes de ejecutar, prepara esto:
    mvn clean package
    ```
 
-   Esto genera `target/carta-oferta-express-1.0-SNAPSHOT.jar` y copia las dependencias en `target/lib/`.
+   Esto genera `target/carta-oferta-express-1.8.jar` y copia las dependencias en `target/lib/`.
 
 3. **Ejecutar en desarrollo:**
 
@@ -92,6 +92,15 @@ generar-portable.bat
 ```
 
 El script prepara la carpeta `dist/` (jar, librerías, módulos de JavaFX y la DLL de Jacob) y usa `jpackage` para crear `salida\CartaOfertaExpress\CartaOfertaExpress.exe`.
+
+## Estado del envío de correos
+
+El código de envío está completo (`CorreosView`, `EmailService`, `MicrosoftAuthService`) y funcionó en pruebas con una cuenta personal de Hotmail y una aplicación registrada en Azure. Sin embargo, **no se configuró con una cuenta corporativa** y por eso no se usa en el entorno de trabajo. Para usarlo con otra cuenta haría falta:
+
+- Registrar la aplicación en Azure para el tipo de cuenta que corresponda (la autoridad actual es `consumers`, solo cuentas personales).
+- Reemplazar el correo remitente y los datos de la aplicación, que hoy están escritos en el código.
+
+Detalles en [docs/GUIA_MODIFICACIONES.md](docs/GUIA_MODIFICACIONES.md).
 
 ## Datos que la aplicación crea al ejecutarse
 
@@ -123,10 +132,10 @@ docs/
 ```
 
 ## Capturas
+
 <!-- 
 [COMPLETAR: capturas de la pantalla principal, el formulario y el envío de correos, con datos inventados]
 -->
-
 
 ## Autor
 

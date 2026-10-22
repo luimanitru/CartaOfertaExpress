@@ -83,6 +83,8 @@ Por eso la aplicación **solo funciona en Windows y con PowerPoint instalado**, 
 
 ## 5. Enviar por correo
 
+> **Estado:** implementado y probado con una cuenta personal de Microsoft, pero no configurado con una cuenta corporativa; no se usa en el entorno de trabajo.
+
 Se abre desde `MainView` con `CorreosView.mostrar`.
 
 | Paso | Clase y método | Qué ocurre |
